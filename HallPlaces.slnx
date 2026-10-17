@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+    <File Path="ARCHITECTURE.md" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="HallPlaces.API/HallPlaces.API.csproj" />
+  <Project Path="HallPlaces.Core/HallPlaces.Core.csproj" />
+  <Project Path="HallPlaces.Data/HallPlaces.Data.csproj" />
+  <Project Path="HallPlaces.Service/HallPlaces.Service.csproj" />
+  <Project Path="HallPlaces.Tests/HallPlaces.Tests.csproj" />
+</Solution>

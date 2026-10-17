@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!-- Identifies this project's User Secrets store (outside the repo, on this computer only). -->
+    <UserSecretsId>hallplaces-api-5f2c9e1a-7b4d-4c8e-9a61-3d2f8b0e4a17</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.*" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="6.*" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.*" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.13" />
+    <!-- Migrations commands (Add-Migration / Update-Database). Not shipped with the app. -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.*">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HallPlaces.Core\HallPlaces.Core.csproj" />
+    <ProjectReference Include="..\HallPlaces.Service\HallPlaces.Service.csproj" />
+    <!-- Data is referenced ONLY so Program.cs can register DbContext and repositories in DI -->
+    <ProjectReference Include="..\HallPlaces.Data\HallPlaces.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="nlog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

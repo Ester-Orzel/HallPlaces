@@ -1,0 +1,21 @@
+# Build output
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Logs
+logs/
+*.log
+
+# Secrets - never commit
+appsettings.*.local.json
+secrets.json
+
+# Tests / environment files
+TestResults/
+.env
+*.pfx
