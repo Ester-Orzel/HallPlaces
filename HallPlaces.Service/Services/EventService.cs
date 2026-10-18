@@ -197,11 +197,12 @@ public class EventService : IEventService
 
     // The hall is only a template: each event gets its OWN copy of the seats,
     // so every seat can be locked and booked independently.
-    private static List<Seat> BuildSeats(IReadOnlyList<int> rowSeatCounts, decimal price)
+    private static List<Seat> BuildSeats(IReadOnlyList<int> rowSeatCounts, decimal basePrice)
     {
         var seats = new List<Seat>();
         for (var row = 0; row < rowSeatCounts.Count; row++)
         {
+            var price = PriceForRow(row, rowSeatCounts.Count, basePrice);
             for (var number = 1; number <= rowSeatCounts[row]; number++)
             {
                 seats.Add(new Seat { RowNumber = row + 1, SeatNumber = number, Price = price });
@@ -209,5 +210,20 @@ public class EventService : IEventService
         }
 
         return seats;
+    }
+
+    // Business rule: the closer to the stage, the higher the price.
+    // The rows are split into three equal sections:
+    //   front third  = base price x 1.5
+    //   middle third = base price x 1.25
+    //   back third   = base price (the SeatPrice the admin entered)
+    // Rounded to a whole amount, and never below the base price.
+    private static readonly decimal[] SectionMultipliers = { 1.5m, 1.25m, 1m };
+
+    private static decimal PriceForRow(int rowIndex, int rowCount, decimal basePrice)
+    {
+        var section = rowIndex * SectionMultipliers.Length / rowCount;   // 0 = front, 1 = middle, 2 = back
+        var price = Math.Round(basePrice * SectionMultipliers[section], 0, MidpointRounding.AwayFromZero);
+        return Math.Max(price, basePrice);
     }
 }

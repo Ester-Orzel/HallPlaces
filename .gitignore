@@ -19,3 +19,6 @@ secrets.json
 TestResults/
 .env
 *.pfx
+
+# Internal handoff notes (not part of the submission)
+HANDOFF.md

@@ -20,7 +20,7 @@ public class EventRequest
     [Range(1, int.MaxValue)]
     public int HallId { get; set; }
 
-    // Every seat of the event is created with this price.
+    // The BASE price = the price of the back rows. Rows closer to the stage cost more (see EventService.PriceForRow).
     [Range(0.01, 100000)]
     public decimal SeatPrice { get; set; }
 
