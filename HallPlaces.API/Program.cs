@@ -93,10 +93,23 @@ builder.Services.AddAuthorization();
 // ---------- CORS ----------
 // The React client runs on ANOTHER address than the API. The browser blocks such calls
 // unless the API says "this origin is allowed". The addresses come from configuration
-// (appsettings: localhost; Render: the environment variable Cors__AllowedOrigins__0).
+// (Render: the environment variable Cors__AllowedOrigins__0 = the address of the deployed client).
 var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? Array.Empty<string>();
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
-    policy.WithOrigins(allowedOrigins).AllowAnyHeader().AllowAnyMethod()));
+{
+    if (builder.Environment.IsDevelopment())
+    {
+        // While developing, any port on this computer is fine (Vite moves to 5174, 5175... when 5173 is busy).
+        policy.SetIsOriginAllowed(origin => new Uri(origin).IsLoopback);
+    }
+    else
+    {
+        // In production ONLY the listed client addresses are allowed.
+        policy.WithOrigins(allowedOrigins);
+    }
+
+    policy.AllowAnyHeader().AllowAnyMethod();
+}));
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi(options => options.AddDocumentTransformer<BearerSecuritySchemeTransformer>());
@@ -129,7 +142,13 @@ app.UseMiddleware<RequestLoggingMiddleware>();
 app.MapOpenApi();
 app.UseSwaggerUI(options => options.SwaggerEndpoint("/openapi/v1.json", "HallPlaces API"));
 
-app.UseHttpsRedirection();
+// Locally the client talks to plain http://localhost:5082. A redirect to https would break its calls
+// (the browser does not follow a redirect on a CORS "preflight" request, and the dev certificate is not trusted).
+// On Render the https is handled by Render itself, so the redirect is only kept outside Development.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 // CORS must come before authentication, so that even the browser's "preflight" requests are answered.
 app.UseCors();

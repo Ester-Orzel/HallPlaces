@@ -89,7 +89,7 @@ public class DataSeeder
 
         // Name -> Id, so the events below can refer to a category / hall by its name.
         var categories = new Dictionary<string, int>();
-        foreach (var name in new[] { "Torah Classes", "Niggun & Music", "Kids & Family", "Gatherings", "Theater", "Chizuk & Emunah" })
+        foreach (var name in new[] { "Torah Classes", "Niggun & Music", "Kids & Family", "Gatherings", "Theater", "Chizuk & Emunah", "Yamim Tovim" })
         {
             categories[name] = await CreateCategoryAsync(name, ct);
         }
@@ -149,7 +149,18 @@ public class DataSeeder
             ("Teshuvah and Renewal Evening", "An evening of chizuk on starting again. Seating is fully separate.", 87, 17, "Heichal HaTorah", 30m, new[] { "Chizuk & Emunah" }),
             ("Mishnayos Siyum for Bochurim", "A siyum on Seder Moed by the bochurim of the yeshiva.", 91, 16, "Ohel Yaakov Hall", 25m, new[] { "Gatherings", "Torah Classes" }),
             ("Melava Malka with Niggunim", "A Motzaei Shabbos melava malka with a live band. Seating is fully separate.", 96, 19, "Beit Simcha Hall", 75m, new[] { "Niggun & Music" }),
-            ("End-of-Year Family Celebration", "A show, niggunim and prizes for the children.", 104, 15, "Kiryat Sefer Convention Center", 45m, new[] { "Kids & Family", "Gatherings" })
+            ("End-of-Year Family Celebration", "A show, niggunim and prizes for the children.", 104, 15, "Kiryat Sefer Convention Center", 45m, new[] { "Kids & Family", "Gatherings" }),
+            ("Parsha Shiur for Bochurim", "A lively shiur on the parsha, with questions and answers.", 12, 18, "Ohel Yaakov Hall", 10m, new[] { "Torah Classes" }),
+            ("Mussar Vaad: Working on Anavah", "A learning evening on humility, based on the words of the mussar sefarim.", 27, 18, "Ohel Yaakov Hall", 15m, new[] { "Torah Classes", "Chizuk & Emunah" }),
+            ("Yeshiva Boys Choir Concert", "The choir of the yeshiva sings niggunim and songs of Torah. Seating is fully separate.", 33, 18, "Heichal HaTorah", 55m, new[] { "Niggun & Music" }),
+            ("Hilchos Shabbos: The Shabbos Kitchen", "Practical halachos for cooking and warming food for Shabbos.", 38, 18, "Shaarei Chesed Hall", 15m, new[] { "Torah Classes" }),
+            ("Hilchos Chanukah Shiur", "The halachos of lighting the menorah, explained with practical examples.", 41, 18, "Shaarei Chesed Hall", 15m, new[] { "Torah Classes", "Yamim Tovim" }),
+            ("Chanukah Family Concert", "Niggunim, a children's choir and sufganiyos for the whole family.", 45, 16, "Beit Simcha Hall", 40m, new[] { "Yamim Tovim", "Kids & Family", "Niggun & Music" }),
+            ("Kiddush Hashem Stories Evening", "True stories of people who sanctified the Name of Heaven, told by a maggid.", 47, 18, "Kiryat Sefer Convention Center", 30m, new[] { "Chizuk & Emunah", "Gatherings" }),
+            ("Puppet Show: The Story of Yonah", "A puppet show with songs about Yonah and the people of Ninveh.", 55, 14, "Shaarei Chesed Hall", 30m, new[] { "Theater", "Kids & Family" }),
+            ("Chesed Gemach Dinner", "A dinner for the benefit of the local gemach, with divrei Torah and niggunim. Seating is fully separate.", 61, 19, "Kiryat Sefer Convention Center", 150m, new[] { "Gatherings" }),
+            ("Emunah Stories with a Maggid", "An evening of stories that strengthen emunah and bitachon.", 71, 18, "Heichal HaTorah", 25m, new[] { "Chizuk & Emunah" }),
+            ("Tu BiShvat Seder for Families", "A seder with the fruits of Eretz Yisrael, divrei Torah and songs for the children.", 94, 16, "Ohel Yaakov Hall", 25m, new[] { "Yamim Tovim", "Kids & Family" })
         };
 
         foreach (var e in events)
